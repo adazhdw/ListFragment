@@ -1,4 +1,4 @@
-package com.grantgz.example;
+package com.grantgz.listfragment;
 
 import android.content.Context;
 import androidx.test.InstrumentationRegistry;
