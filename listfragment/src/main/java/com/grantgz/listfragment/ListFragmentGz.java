@@ -63,29 +63,6 @@ public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A ex
             @Override
             public void OnSlipAction(MotionEvent event) {
 
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.d(TAG,
-                                "MotionEvent---------getState--------" + mSmartRefreshLayout.getState().name());
-                    }
-                });
-                /*
-                Log.d(TAG, "MotionEvent---------y" + event.getY());
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        Log.d(TAG, "MotionEvent---------ACTION_DOWN");
-                        break;
-                    case MotionEvent.ACTION_CANCEL:
-                        Log.d(TAG, "MotionEvent---------ACTION_CANCEL");
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        Log.d(TAG, "MotionEvent---------ACTION_UP");
-                        break;
-
-                }
-                Log.d(TAG, "MotionEvent---------mSwipe" + mSwipe.isRefreshing());
-                */
                 mSmartRefreshLayout.setEnableLoadMore(!mSwipe.isRefreshing());//根据mSwipe的isRefreshing状态来判断事件是否要禁止mSmartRefreshLayout可用
                 mSwipe.setEnabled(mSmartRefreshLayout.getState() != RefreshState.ReleaseToLoad &&
                         mSmartRefreshLayout.getState() != RefreshState.LoadReleased &&
@@ -155,9 +132,6 @@ public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A ex
     }
 
     private void nextPage(final boolean refresh) {
-        Log.d(TAG, "refresh----------------------------------------");
-        Log.d(TAG, "refresh--------refresh----" + refresh);
-        Log.d(TAG, "refresh--------mSwipe----" + mSwipe.isRefreshing());
         final int page = pageStartAt() + (refresh ? 0 : mList.size() / pageSize());
         if (refresh) {
             mSmartRefreshLayout.setEnableLoadMore(false);
@@ -169,7 +143,6 @@ public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A ex
             onNextPage(page, new LoadCallback() {
                 @Override
                 public void onResult() {
-                    Log.d(TAG, "refresh--------onResult");
                     if (refresh) {
                         mList.clear();
                         mListAdapter.notifyDataSetChanged();
