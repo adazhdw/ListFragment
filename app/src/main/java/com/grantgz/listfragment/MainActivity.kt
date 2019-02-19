@@ -67,11 +67,11 @@ class LoadMoreFragment : ListFragmentGz<String, LoadMoreFragment.LoadMoreHolder,
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LoadMoreHolder {
             return LoadMoreHolder(
-                LayoutInflater.from(parent.context).inflate(
-                    R.layout.fragment_list_load_more_item,
-                    parent,
-                    false
-                )
+                    LayoutInflater.from(parent.context).inflate(
+                            R.layout.fragment_list_load_more_item,
+                            parent,
+                            false
+                    )
             ).apply {
                 itemView.setOnClickListener {
                     ToastUtils.showShort("sdfdsfsdfds")
