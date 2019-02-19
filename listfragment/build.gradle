@@ -1,6 +1,9 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
+
+
 group='com.github.grantGzd'
+version = '0.1.0'
 
 android {
     compileSdkVersion 28
@@ -29,14 +32,47 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha02'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
+    androidTestImplementation 'androidx.test:runner:1.1.2-alpha01'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.2-alpha01'
 
 
     implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha02'
     //1.1.0 androidx 版本 下拉刷新，上拉加载第三方库
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-3'
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-3'
+}
+
+//JitPack打包
+// 指定编码
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+// 打包源码
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.sourceFiles
+}
+
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.sourceFiles
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+task classesJar(type: Jar) {
+    from "$buildDir/intermediates/classes/release"
+}
+
+artifacts {
+    archives classesJar
+    archives javadocJar
+    archives sourcesJar
 }
