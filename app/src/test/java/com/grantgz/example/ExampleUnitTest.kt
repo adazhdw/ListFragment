@@ -1,4 +1,4 @@
-package com.grantgz.listfragment
+package com.grantgz.example
 
 import org.junit.Test
 

@@ -1,4 +1,4 @@
-package com.grantgz.listfragment
+package com.grantgz.example
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,13 +11,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ToastUtils
 import jp.wasabeef.recyclerview.animators.SlideInRightAnimator
-import kotlinx.android.synthetic.main.fragment_list_load_more_item.view.*
+import kotlinx.android.synthetic.main.list_load_more_item.view.*
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_list_activity_layout)
+        setContentView(R.layout.list_activity_layout)
 
     }
 
@@ -68,7 +68,7 @@ class LoadMoreFragment : ListFragmentGz<String, LoadMoreFragment.LoadMoreHolder,
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LoadMoreHolder {
             return LoadMoreHolder(
                     LayoutInflater.from(parent.context).inflate(
-                            R.layout.fragment_list_load_more_item,
+                            R.layout.list_load_more_item,
                             parent,
                             false
                     )

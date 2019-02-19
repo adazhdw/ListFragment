@@ -1,4 +1,4 @@
-package com.grantgz.listfragment;
+package com.grantgz.example;
 
 import android.content.Context;
 import android.util.AttributeSet;
