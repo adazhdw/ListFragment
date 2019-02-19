@@ -1,14 +1,11 @@
 apply plugin: 'com.android.library'
+
 apply plugin: 'com.github.dcendents.android-maven'
-
-
 group='com.github.grantGzd'
-version = '0.1.1'
 
 android {
     compileSdkVersion 28
-
-
+    buildToolsVersion "28.0.3"
 
     defaultConfig {
         minSdkVersion 19
@@ -44,28 +41,31 @@ dependencies {
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-3'
 }
 
-//JitPack打包
+/*//JitPack打包
 // 指定编码
 tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
 }
 
 // 打包源码
+
 task sourcesJar(type: Jar) {
     classifier = 'sources'
     from android.sourceSets.main.java.sourceFiles
 }
 
-
 task javadoc(type: Javadoc) {
+    failOnError  false
     source = android.sourceSets.main.java.sourceFiles
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    classpath += configurations.compile
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
     from javadoc.destinationDir
 }
+
 
 task classesJar(type: Jar) {
     from "$buildDir/intermediates/classes/release"
@@ -75,4 +75,4 @@ artifacts {
     archives classesJar
     archives javadocJar
     archives sourcesJar
-}
+}*/
