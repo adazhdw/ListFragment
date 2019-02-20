@@ -37,8 +37,9 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     //ListFragment库
-//        implementation 'com.github.grantGzd:ListFragment:0.1.3'
-    implementation project(':listfragment')
+//        implementation 'com.github.grantGzd:ListFragment:0.1.5'
+    implementation 'com.github.shxhzhxx:AndroidSDK:1.5.1'
+//    implementation project(':listfragment')
 }
 repositories {
     mavenCentral()
