@@ -50,7 +50,7 @@ public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A ex
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        InterceptFrameLayout rootLayout = view.findViewById(R.id.rootLayout);
+        InterceptFrameLayoutEx rootLayout = view.findViewById(R.id.rootLayout);
         mSwipe = view.findViewById(R.id.swipe);
         mSwipe.setOnRefreshListener(this);
         mSmartRefreshLayout = view.findViewById(R.id.smartRefreshLayout);
@@ -68,7 +68,7 @@ public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A ex
             }
         });
 
-        rootLayout.setOnMotionEventListener(new InterceptFrameLayout.OnMotionEventListener() {
+        rootLayout.setOnMotionEventListener(new InterceptFrameLayoutEx.OnMotionEventListener() {
             @Override
             public void OnSlipAction(MotionEvent event) {
                 mEventRunnable.run();

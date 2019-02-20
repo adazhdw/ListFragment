@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.shxhzhxx.sdk.ui.ListFragment
+import com.grantgz.listfragment.ListFragmentGz
 import kotlinx.android.synthetic.main.list_fragment_load_more_item.view.*
 
 class ListFragmentActivity : AppCompatActivity() {
@@ -34,7 +34,7 @@ val addMoreList: ArrayList<String> = arrayListOf<String>().apply {
     add("13")*/
 }
 
-open class LoadMoreFragment : ListFragment<String, LoadMoreFragment.LoadMoreHolder, LoadMoreFragment.LoadMoreAdapter>() {
+open class LoadMoreFragment : ListFragmentGz<String, LoadMoreFragment.LoadMoreHolder, LoadMoreFragment.LoadMoreAdapter>() {
 
     override fun onAdapter(): LoadMoreAdapter {
         return LoadMoreAdapter()
