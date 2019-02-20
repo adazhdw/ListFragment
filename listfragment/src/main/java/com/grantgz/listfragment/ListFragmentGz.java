@@ -4,12 +4,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -73,10 +71,7 @@ public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A ex
         rootLayout.setOnMotionEventListener(new InterceptFrameLayout.OnMotionEventListener() {
             @Override
             public void OnSlipAction(MotionEvent event) {
-                mSmartRefreshLayout.setEnableLoadMore(!mSwipe.isRefreshing());//根据mSwipe的isRefreshing状态来判断事件是否要禁止mSmartRefreshLayout可用
-                mSwipe.setEnabled(mSmartRefreshLayout.getState() != RefreshState.ReleaseToLoad &&
-                        mSmartRefreshLayout.getState() != RefreshState.LoadReleased &&
-                        mSmartRefreshLayout.getState() != RefreshState.Loading);  //根据mSmartRefreshLayout的Load状态来判断事件是否要禁止mSwipe可用
+                mEventRunnable.run();
                 mHandler.post(mEventRunnable);
             }
         });
@@ -145,41 +140,41 @@ public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A ex
     }
 
     private void nextPage() {
-        final boolean refresh = mSwipe.isRefreshing();
-        if (!mLoading) {
-            final int page = pageStartAt() + (refresh ? 0 : mList.size() / pageSize());
-            if (refresh) {
-                mSmartRefreshLayout.setEnableLoadMore(false);
-            } else {
-                mSwipe.setEnabled(false);
-            }
-            mLoading = true;
-            onNextPage(page, new LoadCallback() {
-                @Override
-                public void onResult() {
-                    if (refresh) {
-                        mList.clear();
-                        mListAdapter.notifyDataSetChanged();
-                    }
-                    mLoading = false;
-                    mSwipe.setEnabled(true);
-                    mSwipe.setRefreshing(false);
-                    mSmartRefreshLayout.setEnableLoadMore(true);
-                    mSmartRefreshLayout.finishLoadMore();
-                }
+        if (mLoading)
+            return;
+        mLoading = true;
 
-                @Override
-                public void onLoad(List<M> list) {
-                    if (!list.isEmpty()) {
-                        int start = mList.size();
-                        mList.addAll(list);
-                        mListAdapter.notifyItemRangeInserted(start, mList.size());
-                    } else {
-                        mSmartRefreshLayout.setEnableLoadMore(false);
-                    }
-                }
-            });
+        final boolean refresh = mSwipe.isRefreshing();
+        final int page = pageStartAt() + (refresh ? 0 : mList.size() / pageSize());
+        if (refresh) {
+            mSmartRefreshLayout.setEnableLoadMore(false);
+        } else {
+            mSwipe.setEnabled(false);
         }
+        onNextPage(page, new LoadCallback() {
+            @Override
+            public void onResult() {
+                if (refresh) {
+                    mList.clear();
+                    mListAdapter.notifyDataSetChanged();
+                }
+                mLoading = false;
+                mSwipe.setEnabled(true);
+                mSwipe.setRefreshing(false);
+                mSmartRefreshLayout.setEnableLoadMore(true);
+                mSmartRefreshLayout.finishLoadMore();
+            }
+
+            @Override
+            public void onLoad(List<M> list) {
+                mSmartRefreshLayout.setEnableLoadMore(list.size() == pageSize());
+                if (!list.isEmpty()) {
+                    int start = mList.size();
+                    mList.addAll(list);
+                    mListAdapter.notifyItemRangeInserted(start, mList.size());
+                }
+            }
+        });
     }
 
     public abstract class LoadCallback {
