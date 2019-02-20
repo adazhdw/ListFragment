@@ -21,10 +21,10 @@ class ListFragmentActivity : AppCompatActivity() {
 val addMoreList: ArrayList<String> = arrayListOf<String>().apply {
     add("01")
     add("02")
-    add("03")
+    add("03")/*
     add("04")
     add("05")
-    add("06")/*
+    add("06")
     add("07")
     add("08")
     add("09")
@@ -47,8 +47,8 @@ open class LoadMoreFragment : ListFragmentGz<String, LoadMoreFragment.LoadMoreHo
     override fun onNextPage(page: Int, callback: LoadCallback?) {
         mHandler.postDelayed({
             callback?.onResult()
-            callback?.onLoad(addMoreList)
-        }, 10)
+            callback?.onLoad(if (listSize<6) addMoreList else arrayListOf())
+        }, 1500)
     }
 
     inner class LoadMoreAdapter : RecyclerView.Adapter<LoadMoreHolder>() {

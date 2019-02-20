@@ -34,9 +34,8 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha02'
 
-//    implementation 'com.github.shxhzhxx:AndroidSDK:1.5.1'
 //    ListFragment库
-//        implementation 'com.github.grantGzd:ListFragment:0.1.5'
+//        implementation 'com.github.grantGzd:ListFragment:0.1.6'
     implementation project(':listfragment')
 }
 repositories {
