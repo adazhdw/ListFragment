@@ -1,16 +1,13 @@
 package com.grantgz.app
 
-import android.content.Context
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.grantgz.listfragment.ListFragmentGz
+import com.shxhzhxx.sdk.ui.ListFragment
 import kotlinx.android.synthetic.main.list_fragment_load_more_item.view.*
 
 class ListFragmentActivity : AppCompatActivity() {
@@ -37,12 +34,7 @@ val addMoreList: ArrayList<String> = arrayListOf<String>().apply {
     add("13")*/
 }
 
-open class LoadMoreFragment : ListFragmentGz<String, LoadMoreFragment.LoadMoreHolder, LoadMoreFragment.LoadMoreAdapter>() {
-
-    override fun customizeView(context: Context?, rooContentFl: ViewGroup?) {
-        super.customizeView(context, rooContentFl)
-        rooContentFl?.visibility = View.VISIBLE
-    }
+open class LoadMoreFragment : ListFragment<String, LoadMoreFragment.LoadMoreHolder, LoadMoreFragment.LoadMoreAdapter>() {
 
     override fun onAdapter(): LoadMoreAdapter {
         return LoadMoreAdapter()
@@ -56,7 +48,7 @@ open class LoadMoreFragment : ListFragmentGz<String, LoadMoreFragment.LoadMoreHo
         mHandler.postDelayed({
             callback?.onResult()
             callback?.onLoad(addMoreList)
-        }, 1500)
+        }, 10)
     }
 
     inner class LoadMoreAdapter : RecyclerView.Adapter<LoadMoreHolder>() {
