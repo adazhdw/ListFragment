@@ -1,5 +1,6 @@
 package com.grantgz.app
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -25,8 +26,8 @@ val addMoreList: ArrayList<String> = arrayListOf<String>().apply {
     add("02")
     add("03")
     add("04")
-    add("05")/*
-    add("06")
+    add("05")
+    add("06")/*
     add("07")
     add("08")
     add("09")
@@ -36,12 +37,19 @@ val addMoreList: ArrayList<String> = arrayListOf<String>().apply {
     add("13")*/
 }
 
-class LoadMoreFragment : ListFragmentGz<String, LoadMoreFragment.LoadMoreHolder, LoadMoreFragment.LoadMoreAdapter>() {
+open class LoadMoreFragment : ListFragmentGz<String, LoadMoreFragment.LoadMoreHolder, LoadMoreFragment.LoadMoreAdapter>() {
 
-    private val mHandler: Handler by lazy { Handler(Looper.getMainLooper()) }
+    override fun customizeView(context: Context?, rooContentFl: ViewGroup?) {
+        super.customizeView(context, rooContentFl)
+        rooContentFl?.visibility = View.VISIBLE
+    }
 
     override fun onAdapter(): LoadMoreAdapter {
         return LoadMoreAdapter()
+    }
+
+    protected fun showToast(msg: String) {
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
     }
 
     override fun onNextPage(page: Int, callback: LoadCallback?) {
@@ -62,7 +70,7 @@ class LoadMoreFragment : ListFragmentGz<String, LoadMoreFragment.LoadMoreHolder,
                 )
             ).apply {
                 itemView.setOnClickListener {
-                    Toast.makeText(this@LoadMoreFragment.context,"dsfjsdkljf",Toast.LENGTH_SHORT)
+                    showToast("第 $layoutPosition 行")
                 }
             }
         }

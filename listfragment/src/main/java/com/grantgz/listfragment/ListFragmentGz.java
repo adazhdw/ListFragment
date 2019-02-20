@@ -3,11 +3,13 @@ package com.grantgz.listfragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -29,7 +31,16 @@ public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A ex
     private SmartRefreshLayout mSmartRefreshLayout;
     private A mListAdapter = onAdapter();
     private RecyclerView mListView;
-    private Handler mHandler = new Handler();
+    protected Handler mHandler = new Handler(Looper.getMainLooper());
+    private Runnable mEventRunnable = new Runnable() {
+        @Override
+        public void run() {
+            mSmartRefreshLayout.setEnableLoadMore(!mSwipe.isRefreshing());//根据mSwipe的isRefreshing状态来判断事件是否要禁止mSmartRefreshLayout可用
+            mSwipe.setEnabled(mSmartRefreshLayout.getState() != RefreshState.ReleaseToLoad &&
+                    mSmartRefreshLayout.getState() != RefreshState.LoadReleased &&
+                    mSmartRefreshLayout.getState() != RefreshState.Loading);  //根据mSmartRefreshLayout的Load状态来判断事件是否要禁止mSwipe可用
+        }
+    };
 
     @Nullable
     @Override
@@ -55,20 +66,21 @@ public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A ex
         mSmartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                nextPage(false);
+                nextPage();
             }
         });
 
-        rootLayout.setOnSlipActionListener(new InterceptFrameLayout.OnMotionEventListener() {
+        rootLayout.setOnMotionEventListener(new InterceptFrameLayout.OnMotionEventListener() {
             @Override
             public void OnSlipAction(MotionEvent event) {
-
                 mSmartRefreshLayout.setEnableLoadMore(!mSwipe.isRefreshing());//根据mSwipe的isRefreshing状态来判断事件是否要禁止mSmartRefreshLayout可用
                 mSwipe.setEnabled(mSmartRefreshLayout.getState() != RefreshState.ReleaseToLoad &&
                         mSmartRefreshLayout.getState() != RefreshState.LoadReleased &&
                         mSmartRefreshLayout.getState() != RefreshState.Loading);  //根据mSmartRefreshLayout的Load状态来判断事件是否要禁止mSwipe可用
+                mHandler.post(mEventRunnable);
             }
         });
+
         mSwipe.setOnRefreshListener(this);
         customizeView(getContext(), view.<ViewGroup>findViewById(R.id.rooContentFl));
         refresh();
@@ -100,8 +112,9 @@ public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A ex
     }
 
     protected void addItemDecoration(@NonNull RecyclerView.ItemDecoration decor) {
-        if (mListView != null)
+        if (mListView != null) {
             mListView.addItemDecoration(decor);
+        }
     }
 
     protected RecyclerView.ItemAnimator onItemAnimator() {
@@ -128,17 +141,18 @@ public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A ex
 
     @Override
     public final void onRefresh() {
-        nextPage(true);
+        nextPage();
     }
 
-    private void nextPage(final boolean refresh) {
-        final int page = pageStartAt() + (refresh ? 0 : mList.size() / pageSize());
-        if (refresh) {
-            mSmartRefreshLayout.setEnableLoadMore(false);
-        } else {
-            mSwipe.setEnabled(false);
-        }
+    private void nextPage() {
+        final boolean refresh = mSwipe.isRefreshing();
         if (!mLoading) {
+            final int page = pageStartAt() + (refresh ? 0 : mList.size() / pageSize());
+            if (refresh) {
+                mSmartRefreshLayout.setEnableLoadMore(false);
+            } else {
+                mSwipe.setEnabled(false);
+            }
             mLoading = true;
             onNextPage(page, new LoadCallback() {
                 @Override
@@ -149,7 +163,9 @@ public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A ex
                     }
                     mLoading = false;
                     mSwipe.setEnabled(true);
+                    mSwipe.setRefreshing(false);
                     mSmartRefreshLayout.setEnableLoadMore(true);
+                    mSmartRefreshLayout.finishLoadMore();
                 }
 
                 @Override
@@ -158,9 +174,9 @@ public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A ex
                         int start = mList.size();
                         mList.addAll(list);
                         mListAdapter.notifyItemRangeInserted(start, mList.size());
+                    } else {
+                        mSmartRefreshLayout.setEnableLoadMore(false);
                     }
-                    mSwipe.setRefreshing(false);
-                    mSmartRefreshLayout.finishLoadMore();
                 }
             });
         }
@@ -175,7 +191,7 @@ public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A ex
         /**
          * 调用这个方法代表成功获取指定页面的数据。
          * 失败时不需要调用。
-         * 这个方法的调用必须在{@link #onResult()}后面，且中间不能插入对{@link ListFragmentGz#nextPage(boolean)}的调用
+         * 这个方法的调用必须在{@link #onResult()}后面，且中间不能插入对{@link ListFragmentGz#nextPage()}的调用
          */
         public abstract void onLoad(List<M> list);
     }

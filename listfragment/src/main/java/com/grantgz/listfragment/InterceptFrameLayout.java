@@ -31,7 +31,7 @@ public class InterceptFrameLayout extends FrameLayout {
 
 
     private OnMotionEventListener mOnSlipActionListener;
-    public void setOnSlipActionListener(OnMotionEventListener listener){
+    public void setOnMotionEventListener(OnMotionEventListener listener){
         this.mOnSlipActionListener = listener;
     }
     public interface OnMotionEventListener {
