@@ -4,12 +4,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -52,7 +50,7 @@ public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A ex
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        InterceptFrameLayout rootLayout = view.findViewById(R.id.rootLayout);
+        InterceptFrameLayoutEx rootLayout = view.findViewById(R.id.rootLayout);
         mSwipe = view.findViewById(R.id.swipe);
         mSwipe.setOnRefreshListener(this);
         mSmartRefreshLayout = view.findViewById(R.id.smartRefreshLayout);
@@ -70,7 +68,7 @@ public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A ex
             }
         });
 
-        rootLayout.setOnMotionEventListener(new InterceptFrameLayout.OnMotionEventListener() {
+        rootLayout.setOnMotionEventListener(new InterceptFrameLayoutEx.OnMotionEventListener() {
             @Override
             public void OnSlipAction(MotionEvent event) {
                 mSmartRefreshLayout.setEnableLoadMore(!mSwipe.isRefreshing());//根据mSwipe的isRefreshing状态来判断事件是否要禁止mSmartRefreshLayout可用
