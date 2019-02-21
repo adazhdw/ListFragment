@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.grantgz.listfragment.ListFragmentGz
+import com.scwang.smartrefresh.header.MaterialHeader
 import kotlinx.android.synthetic.main.list_fragment_load_more_item.view.*
 
 class ListFragmentActivity : AppCompatActivity() {
@@ -35,6 +37,14 @@ val addMoreList: ArrayList<String> = arrayListOf<String>().apply {
 }
 
 open class LoadMoreFragment : ListFragmentGz<String, LoadMoreFragment.LoadMoreHolder, LoadMoreFragment.LoadMoreAdapter>() {
+
+    override fun onListHeader(mHeader: SwipeRefreshLayout) {
+        mHeader.setColorSchemeResources(R.color.colorPrimary)
+    }
+
+    override fun onListFooter(mFooter: MaterialHeader) {
+        mFooter.setColorSchemeResources(R.color.colorPrimary)
+    }
 
     override fun onAdapter(): LoadMoreAdapter {
         return LoadMoreAdapter()

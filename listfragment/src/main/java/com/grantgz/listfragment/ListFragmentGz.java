@@ -8,12 +8,15 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
@@ -22,11 +25,12 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A extends RecyclerView.Adapter<VH>> extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
+public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A extends RecyclerView.Adapter<VH>> extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener,IThemeColor {
     private List<M> mList = new ArrayList<>();
     private boolean mLoading = false;
     private SwipeRefreshLayout mSwipe;
     private SmartRefreshLayout mSmartRefreshLayout;
+    private MaterialHeader mFooterEx;
     private A mListAdapter = onAdapter();
     private RecyclerView mListView;
     protected Handler mHandler = new Handler(Looper.getMainLooper());
@@ -54,8 +58,11 @@ public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A ex
         mSwipe = view.findViewById(R.id.swipe);
         mSwipe.setOnRefreshListener(this);
         mSmartRefreshLayout = view.findViewById(R.id.smartRefreshLayout);
-
+        mFooterEx = view.findViewById(R.id.mMaterialHeader);
         mListView = view.findViewById(R.id.listRecyclerView);
+
+        onListHeader(mSwipe);
+        onListFooter(mFooterEx);
         mListView.setItemAnimator(onItemAnimator());
         mListView.setLayoutManager(onLayoutManager());
         mListView.setAdapter(mListAdapter);
