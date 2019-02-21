@@ -174,7 +174,7 @@ public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A ex
 
             @Override
             public void onLoad(List<M> list) {
-                mSmartRefreshLayout.setEnableLoadMore(list.size() == pageSize());
+                mSmartRefreshLayout.setEnableLoadMore(list.size() >= pageSize());
                 if (!list.isEmpty()) {
                     int start = mList.size();
                     mList.addAll(list);
