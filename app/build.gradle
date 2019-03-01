@@ -35,7 +35,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha02'
 
 //    ListFragment库
-//        implementation 'com.github.grantGzd:ListFragment:0.1.6'
+//        implementation 'com.github.grantGzd:ListFragment:0.1.7'
     implementation project(':listfragment')
 }
 repositories {

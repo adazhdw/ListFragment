@@ -36,7 +36,8 @@ val addMoreList: ArrayList<String> = arrayListOf<String>().apply {
     add("13")*/
 }
 
-open class LoadMoreFragment : ListFragmentGz<String, LoadMoreFragment.LoadMoreHolder, LoadMoreFragment.LoadMoreAdapter>() {
+open class LoadMoreFragment :
+    ListFragmentGz<String, LoadMoreFragment.LoadMoreHolder, LoadMoreFragment.LoadMoreAdapter>() {
 
     override fun onListHeader(mHeader: SwipeRefreshLayout) {
         mHeader.setColorSchemeResources(R.color.colorPrimary)
@@ -44,6 +45,10 @@ open class LoadMoreFragment : ListFragmentGz<String, LoadMoreFragment.LoadMoreHo
 
     override fun onListFooter(mFooter: MaterialHeader) {
         mFooter.setColorSchemeResources(R.color.colorPrimary)
+    }
+
+    override fun noDataTip(): String {
+        return "无数据"
     }
 
     override fun onAdapter(): LoadMoreAdapter {
@@ -57,8 +62,8 @@ open class LoadMoreFragment : ListFragmentGz<String, LoadMoreFragment.LoadMoreHo
     override fun onNextPage(page: Int, callback: LoadCallback?) {
         mHandler.postDelayed({
             callback?.onResult()
-            callback?.onLoad(if (listSize<6) addMoreList else arrayListOf())
-        }, 1500)
+            callback?.onLoad(if (listSize < 10) addMoreList else arrayListOf())
+        }, 1000)
     }
 
     inner class LoadMoreAdapter : RecyclerView.Adapter<LoadMoreHolder>() {

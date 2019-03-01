@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">listfragment</string>
+    <string name="no_more_data_text">没有更多的数据了</string>
 </resources>

@@ -4,18 +4,20 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import androidx.annotation.ColorInt;
-import androidx.annotation.ColorRes;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import com.grantgz.listfragment.base.BaseFragment;
+import com.grantgz.listfragment.layout.InterceptFrameLayoutEx;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -25,7 +27,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A extends RecyclerView.Adapter<VH>> extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener,IThemeColor {
+public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A extends RecyclerView.Adapter<VH>> extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, IThemeColor {
     private List<M> mList = new ArrayList<>();
     private boolean mLoading = false;
     private SwipeRefreshLayout mSwipe;
@@ -141,10 +143,20 @@ public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A ex
         return new ArrayList<>(mList);
     }
 
+    protected int getCurrPage() {
+        return currPage;
+    }
+
+    protected String noDataTip() {
+        return getString(R.string.no_more_data_text);
+    }
+
     @Override
     public final void onRefresh() {
         nextPage();
     }
+
+    private int currPage = 0;
 
     private void nextPage() {
         if (mLoading)
@@ -152,13 +164,13 @@ public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A ex
         mLoading = true;
 
         final boolean refresh = mSwipe.isRefreshing();
-        final int page = pageStartAt() + (refresh ? 0 : mList.size() / pageSize());
+        currPage = pageStartAt() + (refresh ? 0 : currPage);
         if (refresh) {
             mSmartRefreshLayout.setEnableLoadMore(false);
         } else {
             mSwipe.setEnabled(false);
         }
-        onNextPage(page, new LoadCallback() {
+        onNextPage(currPage, new LoadCallback() {
             @Override
             public void onResult() {
                 if (refresh) {
@@ -174,12 +186,15 @@ public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A ex
 
             @Override
             public void onLoad(List<M> list) {
-                mSmartRefreshLayout.setEnableLoadMore(list.size() >= pageSize());
                 if (!list.isEmpty()) {
+                    currPage++;
                     int start = mList.size();
                     mList.addAll(list);
                     mListAdapter.notifyItemRangeInserted(start, mList.size());
+                } else {
+                    Toast.makeText(getContext(), noDataTip(), Toast.LENGTH_SHORT).show();
                 }
+                Log.d(TAG, "currPage--------------" + currPage);
             }
         });
     }
