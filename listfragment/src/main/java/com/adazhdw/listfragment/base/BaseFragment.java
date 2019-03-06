@@ -1,4 +1,4 @@
-package com.grantgz.listfragment.base;
+package com.adazhdw.listfragment.base;
 
 import android.view.View;
 import androidx.fragment.app.Fragment;

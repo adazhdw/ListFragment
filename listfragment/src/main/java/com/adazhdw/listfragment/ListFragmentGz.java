@@ -1,4 +1,4 @@
-package com.grantgz.listfragment;
+package com.adazhdw.listfragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -16,8 +16,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import com.grantgz.listfragment.base.BaseFragment;
-import com.grantgz.listfragment.layout.InterceptFrameLayoutEx;
+import com.adazhdw.listfragment.base.BaseFragment;
+import com.adazhdw.listfragment.layout.InterceptFrameLayoutEx;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;

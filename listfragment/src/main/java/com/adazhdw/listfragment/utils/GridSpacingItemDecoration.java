@@ -1,4 +1,4 @@
-package com.grantgz.listfragment.utils;
+package com.adazhdw.listfragment.utils;
 
 import android.graphics.Rect;
 import android.view.View;

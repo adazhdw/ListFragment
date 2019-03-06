@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 
 apply plugin: 'com.github.dcendents.android-maven'
-group='com.dguozhdw'
+group='com.adazhdw'
 
 android {
     compileSdkVersion 28
@@ -29,10 +29,13 @@ android {
 }
 
 dependencies {
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.1.2-alpha01'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.2-alpha01'
+
+    
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha02'
-
     implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha02'
     //1.1.0 androidx 版本 下拉刷新，上拉加载第三方库
     api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-3'
