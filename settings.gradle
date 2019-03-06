@@ -1,1 +1,1 @@
-include ':listfragment', ':app', ':baselibrary'
+include ':listfragment', ':app'
