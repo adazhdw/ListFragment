@@ -125,6 +125,16 @@ public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A ex
         return new DefaultItemAnimator();
     }
 
+    @Override
+    public void onListFooter(MaterialHeader mFooter) {
+
+    }
+
+    @Override
+    public void onListHeader(SwipeRefreshLayout mHeader) {
+
+    }
+
     @NonNull
 
     protected abstract A onAdapter();
