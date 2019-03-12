@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.adazhdw.listfragment.layout.InterceptFrameLayoutEx xmlns:android="http://schemas.android.com/apk/res/android"
+<com.adazhdw.listfragment.layout.InterceptLayoutEx xmlns:android="http://schemas.android.com/apk/res/android"
                                                         xmlns:app="http://schemas.android.com/apk/res-auto"
                                                         android:id="@+id/rootLayout"
                                                         android:layout_width="match_parent"
@@ -46,4 +46,4 @@
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-</com.adazhdw.listfragment.layout.InterceptFrameLayoutEx>
+</com.adazhdw.listfragment.layout.InterceptLayoutEx>

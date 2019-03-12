@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.adazhdw.listfragment.base.BaseFragment;
-import com.adazhdw.listfragment.layout.InterceptFrameLayoutEx;
+import com.adazhdw.listfragment.layout.InterceptLayoutEx;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -56,7 +56,7 @@ public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A ex
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        InterceptFrameLayoutEx rootLayout = view.findViewById(R.id.rootLayout);
+        InterceptLayoutEx rootLayout = view.findViewById(R.id.rootLayout);
         mSwipe = view.findViewById(R.id.swipe);
         mSwipe.setOnRefreshListener(this);
         mSmartRefreshLayout = view.findViewById(R.id.smartRefreshLayout);
@@ -77,7 +77,7 @@ public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A ex
             }
         });
 
-        rootLayout.setOnMotionEventListener(new InterceptFrameLayoutEx.OnMotionEventListener() {
+        rootLayout.setOnMotionEventListener(new InterceptLayoutEx.OnMotionEventListener() {
             @Override
             public void OnSlipAction(MotionEvent event) {
                 mEventRunnable.run();

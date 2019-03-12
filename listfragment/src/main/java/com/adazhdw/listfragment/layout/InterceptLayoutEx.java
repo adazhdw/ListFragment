@@ -7,17 +7,17 @@ import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class InterceptFrameLayoutEx extends FrameLayout {
+public class InterceptLayoutEx extends FrameLayout {
     private String TAG = "InterceptFrameLayout";
-    public InterceptFrameLayoutEx(@NonNull Context context) {
+    public InterceptLayoutEx(@NonNull Context context) {
         super(context);
     }
 
-    public InterceptFrameLayoutEx(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public InterceptLayoutEx(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public InterceptFrameLayoutEx(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public InterceptLayoutEx(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
