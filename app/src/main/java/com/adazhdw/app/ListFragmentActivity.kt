@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.adazhdw.listfragment.ListFragmentCustom
 import com.adazhdw.listfragment.ListFragmentGz
 import com.scwang.smartrefresh.header.MaterialHeader
 import kotlinx.android.synthetic.main.list_fragment_load_more_item.view.*
@@ -23,28 +25,23 @@ class ListFragmentActivity : AppCompatActivity() {
 val addMoreList: ArrayList<String> = arrayListOf<String>().apply {
     add("01")
     add("02")
-    add("03")/*
+    add("03")
     add("04")
     add("05")
     add("06")
     add("07")
     add("08")
-    add("09")
+    add("09")/*
     add("10")
     add("11")
     add("12")
     add("13")*/
 }
 
-open class LoadMoreFragment :
-    ListFragmentGz<String, LoadMoreFragment.LoadMoreHolder, LoadMoreFragment.LoadMoreAdapter>() {
+open class LoadMoreFragment : ListFragmentCustom<String, LoadMoreFragment.LoadMoreHolder, LoadMoreFragment.LoadMoreAdapter>() {
 
     override fun onListHeader(mHeader: SwipeRefreshLayout) {
         mHeader.setColorSchemeResources(R.color.colorPrimary)
-    }
-
-    override fun onListFooter(mFooter: MaterialHeader) {
-        mFooter.setColorSchemeResources(R.color.colorPrimary)
     }
 
     override fun noDataTip(): String {
@@ -62,7 +59,7 @@ open class LoadMoreFragment :
     override fun onNextPage(page: Int, callback: LoadCallback?) {
         mHandler.postDelayed({
             callback?.onResult()
-            callback?.onLoad(if (listSize < 10) addMoreList else arrayListOf())
+            callback?.onLoad(addMoreList)
         }, 1000)
     }
 
@@ -70,11 +67,11 @@ open class LoadMoreFragment :
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LoadMoreHolder {
             return LoadMoreHolder(
-                LayoutInflater.from(parent.context).inflate(
-                    R.layout.list_fragment_load_more_item,
-                    parent,
-                    false
-                )
+                    LayoutInflater.from(parent.context).inflate(
+                            R.layout.list_fragment_load_more_item,
+                            parent,
+                            false
+                    )
             ).apply {
                 itemView.setOnClickListener {
                     showToast("第 $layoutPosition 行")
