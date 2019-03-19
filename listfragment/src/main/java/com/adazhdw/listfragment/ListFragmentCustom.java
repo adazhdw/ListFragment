@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -74,7 +75,7 @@ public abstract class ListFragmentCustom<M, VH extends RecyclerView.ViewHolder, 
                 super.onScrolled(recyclerView, dx, dy);
                 Log.d(TAG,"dy--------:"+dy);
                 if (RecyclerUtil.isSlideToBottom(recyclerView) && dy > 0) {
-                    mFooterFl.setVisibility(View.VISIBLE);
+                    showLoading();
                     nextPage();
                 }
             }
@@ -83,6 +84,18 @@ public abstract class ListFragmentCustom<M, VH extends RecyclerView.ViewHolder, 
         mSwipe.setOnRefreshListener(this);
         customizeView(getContext(), view.<ViewGroup>findViewById(R.id.rooContentFl));
         refresh();
+    }
+
+    private void showLoading() {
+        mFooterFl.setVisibility(View.VISIBLE);
+        ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) mSwipe.getLayoutParams();
+        lp.bottomToTop = R.id.footerFl;
+    }
+
+    private void hideLoading(){
+        mFooterFl.setVisibility(View.GONE);
+        ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) mSwipe.getLayoutParams();
+        lp.bottomToTop = R.id.footerFl;
     }
 
     public final void refresh() {
@@ -184,7 +197,7 @@ public abstract class ListFragmentCustom<M, VH extends RecyclerView.ViewHolder, 
                 mLoading = false;
                 mSwipe.setEnabled(true);
                 mSwipe.setRefreshing(false);
-                mFooterFl.setVisibility(View.GONE);
+                hideLoading();
             }
 
             @Override

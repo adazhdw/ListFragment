@@ -40,7 +40,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha03'
 
 //    ListFragment库
-//        implementation 'com.github.adazhdw:ListFragment:0.2.1'
+//        implementation 'com.github.adazhdw:ListFragment:0.2.2'
     implementation project(':listfragment')
 }
 repositories {
