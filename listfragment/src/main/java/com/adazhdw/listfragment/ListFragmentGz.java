@@ -22,6 +22,7 @@ import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
+import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A ex
     private boolean mLoading = false;
     private SwipeRefreshLayout mSwipe;
     private SmartRefreshLayout mSmartRefreshLayout;
-    private MaterialHeader mFooterEx;
+    private InternalAbstract mFooterEx;
     private A mListAdapter = onAdapter();
     private RecyclerView mListView;
     protected Handler mHandler = new Handler(Looper.getMainLooper());
@@ -100,6 +101,7 @@ public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A ex
     /**
      * 返回值不要太小，尽量避免一屏高度可以显示一页数据的情况。
      */
+
     protected int pageSize() {
         return 10;
     }
@@ -125,8 +127,12 @@ public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A ex
         return new DefaultItemAnimator();
     }
 
+    /**
+     * 主题颜色设置方法
+     * @param mFooter
+     */
     @Override
-    public void onListFooter(MaterialHeader mFooter) {
+    public void onListFooter(InternalAbstract mFooter) {
 
     }
 
@@ -136,7 +142,6 @@ public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A ex
     }
 
     @NonNull
-
     protected abstract A onAdapter();
 
     protected abstract void onNextPage(int page, LoadCallback callback);
@@ -200,6 +205,7 @@ public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A ex
                     currPage++;
                     int start = mList.size();
                     mList.addAll(list);
+//                    mListAdapter.notifyDataSetChanged();
                     mListAdapter.notifyItemRangeInserted(start, mList.size());
                 } else {
                     Toast.makeText(getContext(), noDataTip(), Toast.LENGTH_SHORT).show();

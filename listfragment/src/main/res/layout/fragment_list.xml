@@ -12,6 +12,8 @@
         android:layout_height="match_parent"
         android:overScrollMode="never"
         app:srlEnableAutoLoadMore="false"
+        app:srlEnableFooterFollowWhenLoadFinished="true"
+        app:srlEnableFooterFollowWhenNoMoreData="true"
         app:srlEnableFooterTranslationContent="true"
         app:srlEnableRefresh="false">
 

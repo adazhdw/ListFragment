@@ -2,6 +2,7 @@ package com.adazhdw.listfragment;
 
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.scwang.smartrefresh.header.MaterialHeader;
+import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 
 public interface IThemeColor {
     /**
@@ -9,5 +10,5 @@ public interface IThemeColor {
      * @param mHeader
      */
     void onListHeader(SwipeRefreshLayout mHeader);
-    void onListFooter(MaterialHeader mFooter);
+    void onListFooter(InternalAbstract mFooter);
 }

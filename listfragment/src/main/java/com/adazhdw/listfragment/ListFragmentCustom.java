@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -22,11 +21,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.adazhdw.listfragment.base.BaseFragment;
 import com.adazhdw.listfragment.layout.InterceptLayoutEx;
 import com.adazhdw.listfragment.utils.RecyclerUtil;
-import com.scwang.smartrefresh.header.MaterialHeader;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.constant.RefreshState;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +45,6 @@ public abstract class ListFragmentCustom<M, VH extends RecyclerView.ViewHolder, 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        InterceptLayoutEx rootLayout = view.findViewById(R.id.rootLayout);
         mSwipe = view.findViewById(R.id.swipe);
         mFooterFl = view.findViewById(R.id.footerFl);
         mLoadingBar = view.findViewById(R.id.loadingBar);
@@ -74,7 +67,7 @@ public abstract class ListFragmentCustom<M, VH extends RecyclerView.ViewHolder, 
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 Log.d(TAG,"dy--------:"+dy);
-                if (RecyclerUtil.isSlideToBottom(recyclerView) && dy > 0) {
+                if (RecyclerUtil.isSlideToBottom(recyclerView) &&RecyclerUtil.isAlreadyBottom(recyclerView)&& dy > 0) {
                     showLoading();
                     nextPage();
                 }
