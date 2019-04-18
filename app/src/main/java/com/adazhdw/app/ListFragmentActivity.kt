@@ -9,8 +9,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.adazhdw.baselibrary.http.RetrofitUtil
+import com.adazhdw.baselibrary.http.requestC
 import com.adazhdw.listfragment.ListFragmentCustom
+import io.reactivex.Observable
 import kotlinx.android.synthetic.main.list_fragment_load_more_item.view.*
+import retrofit2.Call
+import retrofit2.http.GET
+import retrofit2.http.Path
 
 class ListFragmentActivity : AppCompatActivity() {
 
@@ -20,27 +26,8 @@ class ListFragmentActivity : AppCompatActivity() {
     }
 }
 
-val addMoreList: ArrayList<String> = arrayListOf<String>().apply {
-    add("01")
-    add("02")
-    add("03")
-    add("04")
-    add("05")
-    add("06")
-    add("07")
-    add("08")
-    add("09")
-    add("10")
-    add("11")/*
-    add("12")
-    add("13")*/
-}
-
-open class LoadMoreFragment : ListFragmentCustom<String, LoadMoreFragment.LoadMoreHolder, LoadMoreFragment.LoadMoreAdapter>() {
-
-    override fun onLayoutManager(): RecyclerView.LayoutManager {
-        return GridLayoutManager(context,2)
-    }
+open class LoadMoreFragment :
+    ListFragmentCustom<ChapterHistory, LoadMoreFragment.LoadMoreHolder, LoadMoreFragment.LoadMoreAdapter>() {
 
     override fun onListHeader(mHeader: SwipeRefreshLayout) {
         mHeader.setColorSchemeResources(R.color.colorPrimary)
@@ -54,26 +41,26 @@ open class LoadMoreFragment : ListFragmentCustom<String, LoadMoreFragment.LoadMo
         return LoadMoreAdapter()
     }
 
-    protected fun showToast(msg: String) {
-        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onNextPage(page: Int, callback: LoadCallback?) {
-        mHandler.postDelayed({
-            callback?.onResult()
-            callback?.onLoad(addMoreList)
-        }, 1000)
+    override fun onNextPage(page: Int, callback: LoadCallback) {
+        RetrofitUtil.apiService(ApiService::class.java)
+            .getWxArticleHistory(408, page)
+            .requestC(onSuccess = {
+                mHandler.postDelayed({
+                    callback.onResult()
+                    callback.onLoad(it.data?.datas ?: listOf())
+                }, 1000)
+            })
     }
 
     inner class LoadMoreAdapter : RecyclerView.Adapter<LoadMoreHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LoadMoreHolder {
             return LoadMoreHolder(
-                    LayoutInflater.from(parent.context).inflate(
-                            R.layout.list_fragment_load_more_item,
-                            parent,
-                            false
-                    )
+                LayoutInflater.from(parent.context).inflate(
+                    R.layout.list_fragment_load_more_item,
+                    parent,
+                    false
+                )
             ).apply {
                 itemView.setOnClickListener {
                     showToast("第 $layoutPosition 行")
@@ -86,7 +73,9 @@ open class LoadMoreFragment : ListFragmentCustom<String, LoadMoreFragment.LoadMo
         }
 
         override fun onBindViewHolder(holder: LoadMoreHolder, position: Int) {
-            holder.itemView.itemTv.text = "第 $position 行"
+            getListItem(position).let {
+                holder.itemView.itemTv.text = it.title
+            }
         }
 
     }
@@ -94,3 +83,10 @@ open class LoadMoreFragment : ListFragmentCustom<String, LoadMoreFragment.LoadMo
     class LoadMoreHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 }
 
+interface ApiService {
+
+
+    @GET("/wxarticle/list/{articleId}/{page}/json")
+    fun getWxArticleHistory(@Path("articleId") articleId: Int, @Path("page") page: Int = 1): Observable<HistoryList>
+
+}

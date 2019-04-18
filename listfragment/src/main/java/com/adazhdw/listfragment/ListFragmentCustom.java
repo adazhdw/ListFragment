@@ -21,6 +21,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.adazhdw.listfragment.base.BaseFragment;
 import com.adazhdw.listfragment.layout.InterceptLayoutEx;
 import com.adazhdw.listfragment.utils.RecyclerUtil;
+import com.adazhdw.listfragment.widget.TranslationScrollView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,7 @@ public abstract class ListFragmentCustom<M, VH extends RecyclerView.ViewHolder, 
     private SwipeRefreshLayout mSwipe;
     private FrameLayout mFooterFl;
     private ProgressBar mLoadingBar;
+    private TranslationScrollView mTranslationScrollView;
     private A mListAdapter = onAdapter();
     private RecyclerView mListView;
     protected Handler mHandler = new Handler(Looper.getMainLooper());
@@ -46,6 +48,7 @@ public abstract class ListFragmentCustom<M, VH extends RecyclerView.ViewHolder, 
         super.onViewCreated(view, savedInstanceState);
 
         mSwipe = view.findViewById(R.id.swipe);
+        mTranslationScrollView = view.findViewById(R.id.mTranslationScrollView);
         mFooterFl = view.findViewById(R.id.footerFl);
         mLoadingBar = view.findViewById(R.id.loadingBar);
         mSwipe.setOnRefreshListener(this);
@@ -57,38 +60,30 @@ public abstract class ListFragmentCustom<M, VH extends RecyclerView.ViewHolder, 
         mListView.setLayoutManager(onLayoutManager());
         mListView.setAdapter(mListAdapter);
 
-        mListView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        mTranslationScrollView.setEnableTopRebound(false);
+        mTranslationScrollView.setEnableBottomRebound(true);
+        mTranslationScrollView.setScrollOffset(0.5);
+        mTranslationScrollView.setLoadingView(mFooterFl);
+        mTranslationScrollView.setReboundDuration(300);
+        mTranslationScrollView.setLoadingHeight(200);
+        mTranslationScrollView.setShowDistance(300);
+        mTranslationScrollView.setOnReboundEndListener(new TranslationScrollView.OnReboundEndListener() {
+
             @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
+            public void onReboundTopComplete() {
+
             }
 
             @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                Log.d(TAG,"dy--------:"+dy);
-                if (RecyclerUtil.isSlideToBottom(recyclerView) &&RecyclerUtil.isAlreadyBottom(recyclerView)&& dy > 0) {
-                    showLoading();
-                    nextPage();
-                }
+            public void onReboundBottomComplete() {
+                nextPage();
             }
         });
+
 
         mSwipe.setOnRefreshListener(this);
         customizeView(getContext(), view.<ViewGroup>findViewById(R.id.rooContentFl));
         refresh();
-    }
-
-    private void showLoading() {
-        mFooterFl.setVisibility(View.VISIBLE);
-        ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) mSwipe.getLayoutParams();
-        lp.bottomToTop = R.id.footerFl;
-    }
-
-    private void hideLoading(){
-        mFooterFl.setVisibility(View.GONE);
-        ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) mSwipe.getLayoutParams();
-        lp.bottomToTop = R.id.footerFl;
     }
 
     public final void refresh() {
@@ -106,7 +101,7 @@ public abstract class ListFragmentCustom<M, VH extends RecyclerView.ViewHolder, 
     }
 
     protected int pageStartAt() {
-        return 0;
+        return 1;
     }
 
     protected void customizeView(Context context, ViewGroup rooContentFl) {
@@ -127,12 +122,16 @@ public abstract class ListFragmentCustom<M, VH extends RecyclerView.ViewHolder, 
     }
 
 
-    public void onListFooter(FrameLayout mFooterFl) {
+    public final void onListFooter(FrameLayout mFooterFl) {
 
     }
 
     public void onListHeader(SwipeRefreshLayout mHeader) {
 
+    }
+
+    protected void showToast(String msg ) {
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
     @NonNull
@@ -175,10 +174,10 @@ public abstract class ListFragmentCustom<M, VH extends RecyclerView.ViewHolder, 
 
         final boolean refresh = mSwipe.isRefreshing();
         currPage = pageStartAt() + (refresh ? 0 : currPage);
-        if (refresh) {
-            mFooterFl.setVisibility(View.GONE);
-        } else {
+        if (!refresh) {
             mSwipe.setEnabled(false);
+        } else {
+
         }
         onNextPage(currPage, new LoadCallback() {
             @Override
@@ -190,7 +189,7 @@ public abstract class ListFragmentCustom<M, VH extends RecyclerView.ViewHolder, 
                 mLoading = false;
                 mSwipe.setEnabled(true);
                 mSwipe.setRefreshing(false);
-                hideLoading();
+                mTranslationScrollView.resetAnim();
             }
 
             @Override
