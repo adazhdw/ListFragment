@@ -1,12 +1,14 @@
 package com.adazhdw.listfragment.widget;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.core.widget.NestedScrollView;
+import com.adazhdw.listfragment.R;
 
 public class TranslationScrollView extends NestedScrollView {
 
@@ -17,7 +19,7 @@ public class TranslationScrollView extends NestedScrollView {
     private ViewGroup mContentView;
     private Rect mRect = new Rect();
 
-    private int mLoadingHeight = 50;
+    private int mLoadingHeight = 200;
     private int lastY;
     private boolean rebound = false;
     private int reboundDirection = 0; //<0 表示下部回弹 >0 表示上部回弹 0表示不回弹
@@ -30,15 +32,27 @@ public class TranslationScrollView extends NestedScrollView {
     private float mLastOffset = 0;
 
     public TranslationScrollView(Context context) {
-        super(context);
+        super(context,null);
     }
 
     public TranslationScrollView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        super(context, attrs,0);
     }
 
     public TranslationScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        initView(context,attrs,defStyleAttr);
+    }
+
+    private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
+        TypedArray mTypedArray = context.obtainStyledAttributes(attrs, R.styleable.TranslationScrollView);
+        mEnableTopRebound = mTypedArray.getBoolean(R.styleable.TranslationScrollView_tsv_top_rebound_enabled,true);
+        mEnableBottomRebound = mTypedArray.getBoolean(R.styleable.TranslationScrollView_tsv_bottom_rebound_enabled,true);
+        scrollOffset = mTypedArray.getFloat(R.styleable.TranslationScrollView_tsv_scroll_offset, (float) 0.30);
+        reboundDuration = mTypedArray.getInteger(R.styleable.TranslationScrollView_tsv_rebound_duration, 300);
+        showDistance = (int) mTypedArray.getDimension(R.styleable.TranslationScrollView_tsv_show_distance, 200);
+        mLoadingHeight = (int) mTypedArray.getDimension(R.styleable.TranslationScrollView_tsv_loading_height, 200);
+        mTypedArray.recycle();
     }
 
     /**

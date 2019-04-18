@@ -37,6 +37,8 @@ open class LoadMoreFragment :
         return "无数据"
     }
 
+
+
     override fun onAdapter(): LoadMoreAdapter {
         return LoadMoreAdapter()
     }

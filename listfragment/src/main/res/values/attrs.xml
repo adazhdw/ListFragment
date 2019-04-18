@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="TranslationScrollView">
+        <attr name="tsv_top_rebound_enabled" format="boolean"/>
+        <attr name="tsv_bottom_rebound_enabled" format="boolean"/>
+        <attr name="tsv_scroll_offset" format="float"/>
+        <attr name="tsv_loading_height" format="dimension"/>
+        <attr name="tsv_show_distance" format="dimension"/>
+        <attr name="tsv_rebound_duration" format="integer"/>
+    </declare-styleable>
+
+</resources>

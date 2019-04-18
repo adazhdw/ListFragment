@@ -1,6 +1,10 @@
 package com.adazhdw.listfragment;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -11,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+import androidx.annotation.AnimRes;
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -25,6 +31,7 @@ import com.adazhdw.listfragment.widget.TranslationScrollView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class ListFragmentCustom<M, VH extends RecyclerView.ViewHolder, A extends RecyclerView.Adapter<VH>> extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
     private List<M> mList = new ArrayList<>();
@@ -55,7 +62,7 @@ public abstract class ListFragmentCustom<M, VH extends RecyclerView.ViewHolder, 
         mListView = view.findViewById(R.id.listRecyclerView);
 
         onListHeader(mSwipe);
-        onListFooter(null);
+        onListFooter(mLoadingBar);
         mListView.setItemAnimator(onItemAnimator());
         mListView.setLayoutManager(onLayoutManager());
         mListView.setAdapter(mListAdapter);
@@ -80,7 +87,7 @@ public abstract class ListFragmentCustom<M, VH extends RecyclerView.ViewHolder, 
             }
         });
 
-
+        setFooterStyle(onListFooterStyle());
         mSwipe.setOnRefreshListener(this);
         customizeView(getContext(), view.<ViewGroup>findViewById(R.id.rooContentFl));
         refresh();
@@ -121,16 +128,34 @@ public abstract class ListFragmentCustom<M, VH extends RecyclerView.ViewHolder, 
         return new DefaultItemAnimator();
     }
 
+    public void onListFooter(ProgressBar mProgressBar) {
 
-    public final void onListFooter(FrameLayout mFooterFl) {
+    }
 
+    /**
+     * 返回ProgressBar的Style文件
+     * @return
+     */
+    @DrawableRes
+    public int onListFooterStyle() {
+        return R.drawable.loading_bar_style;
     }
 
     public void onListHeader(SwipeRefreshLayout mHeader) {
 
     }
 
-    protected void showToast(String msg ) {
+    /**
+     * ProgressBar设置Style
+     * @param res
+     */
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public void setFooterStyle(@DrawableRes int res) {
+        Drawable drawable = Objects.requireNonNull(getContext()).getDrawable(res);
+        mLoadingBar.setIndeterminateDrawable(drawable);
+    }
+
+    protected void showToast(String msg) {
         Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
@@ -204,6 +229,41 @@ public abstract class ListFragmentCustom<M, VH extends RecyclerView.ViewHolder, 
                 }
             }
         });
+    }
+
+    /**
+     * ScrollView 属性设置方法
+     * mTranslationScrollView.setLoadingView(mFooterFl);
+     */
+
+    public void setEnableTopRebound(boolean isEnable){
+        if (mTranslationScrollView!=null) {
+            mTranslationScrollView.setEnableTopRebound(isEnable);
+        }
+    }
+
+    public void setEnableBottomRebound(boolean isEnable){
+        if (mTranslationScrollView!=null) {
+            mTranslationScrollView.setEnableBottomRebound(isEnable);
+        }
+    }
+
+    public void setScrollOffset(float scrollOffset){
+        if (mTranslationScrollView!=null){
+            mTranslationScrollView.setScrollOffset(scrollOffset);
+        }
+    }
+
+    public void setReboundDuration(long duration){
+        mTranslationScrollView.setReboundDuration(duration);
+    }
+
+    public void setLoadingHeight(int loadingHeight){
+        mTranslationScrollView.setLoadingHeight(loadingHeight);
+    }
+
+    public void setShowDistance(int showDistance){
+        mTranslationScrollView.setShowDistance(showDistance);
     }
 
     public abstract class LoadCallback {
