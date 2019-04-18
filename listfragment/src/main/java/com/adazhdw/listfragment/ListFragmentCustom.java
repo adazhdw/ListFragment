@@ -72,7 +72,7 @@ public abstract class ListFragmentCustom<M, VH extends RecyclerView.ViewHolder, 
         mTranslationScrollView.setScrollOffset(0.5);
         mTranslationScrollView.setLoadingView(mFooterFl);
         mTranslationScrollView.setReboundDuration(300);
-        mTranslationScrollView.setLoadingHeight(200);
+        mTranslationScrollView.setLoadingHeight(150);
         mTranslationScrollView.setShowDistance(300);
         mTranslationScrollView.setOnReboundEndListener(new TranslationScrollView.OnReboundEndListener() {
 
