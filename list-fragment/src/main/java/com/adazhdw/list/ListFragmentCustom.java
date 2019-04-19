@@ -1,4 +1,4 @@
-package com.adazh.list;
+package com.adazhdw.list;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -20,9 +20,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import com.adazh.list.base.BaseFragment;
-import com.adazh.list.widget.TranslationScrollView;
-import com.adazhdw.list.R;
+import com.adazhdw.list.base.BaseFragment;
+import com.adazhdw.list.widget.TranslationScrollView;
 
 import java.util.ArrayList;
 import java.util.List;

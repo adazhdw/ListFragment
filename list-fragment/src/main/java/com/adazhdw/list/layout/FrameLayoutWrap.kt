@@ -1,4 +1,4 @@
-package com.adazh.list.layout
+package com.adazhdw.list.layout
 
 import android.content.Context
 import android.util.AttributeSet

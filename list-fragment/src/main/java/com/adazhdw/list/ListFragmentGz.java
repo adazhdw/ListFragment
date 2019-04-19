@@ -1,4 +1,4 @@
-package com.adazh.list;
+package com.adazhdw.list;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -17,8 +17,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import com.adazh.list.layout.InterceptLayoutEx;
-import com.adazhdw.list.R;
+import com.adazhdw.list.layout.InterceptLayoutEx;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;

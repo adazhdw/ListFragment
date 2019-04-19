@@ -1,4 +1,4 @@
-package com.adazh.list.widget;
+package com.adazhdw.list.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;

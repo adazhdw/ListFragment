@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.adazhdw.baselibrary.http.RetrofitUtil
 import com.adazhdw.baselibrary.http.requestC
-import com.adazh.list.ListFragmentCustom
+import com.adazhdw.list.ListFragmentCustom
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.list_fragment_load_more_item.view.*
 import retrofit2.http.GET

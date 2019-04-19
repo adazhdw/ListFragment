@@ -1,4 +1,4 @@
-package com.adazh.list;
+package com.adazhdw.list;
 
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.scwang.smartrefresh.layout.internal.InternalAbstract;

@@ -1,4 +1,4 @@
-package com.adazh.list.utils
+package com.adazhdw.list.utils
 
 import androidx.recyclerview.widget.RecyclerView
 

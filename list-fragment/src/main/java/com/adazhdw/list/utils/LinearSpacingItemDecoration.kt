@@ -1,4 +1,4 @@
-package com.adazh.list.utils
+package com.adazhdw.list.utils
 
 import android.graphics.Rect
 import android.view.View

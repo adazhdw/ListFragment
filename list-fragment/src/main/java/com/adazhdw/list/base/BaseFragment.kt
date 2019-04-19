@@ -1,4 +1,4 @@
-package com.adazh.list.base
+package com.adazhdw.list.base
 
 import android.view.View
 import androidx.fragment.app.Fragment

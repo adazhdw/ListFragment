@@ -1,4 +1,4 @@
-package com.adazh.list.utils
+package com.adazhdw.list.utils
 
 import android.graphics.Color
 import android.text.SpannableString
