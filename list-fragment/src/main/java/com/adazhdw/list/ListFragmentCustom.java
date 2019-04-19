@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.adazhdw.list.base.BaseFragment;
+import com.adazhdw.list.base.FooterStyle;
 import com.adazhdw.list.widget.TranslationScrollView;
 
 import java.util.ArrayList;
@@ -81,7 +82,7 @@ public abstract class ListFragmentCustom<M, VH extends RecyclerView.ViewHolder, 
             }
         });
 
-        setFooterStyle(onListFooterStyle());
+        setFooterStyle(onListFooterStyle(FooterStyle.RED));
         mSwipe.setOnRefreshListener(this);
         customizeView(getContext(), view.<ViewGroup>findViewById(R.id.rooContentFl));
         refresh();
@@ -131,8 +132,16 @@ public abstract class ListFragmentCustom<M, VH extends RecyclerView.ViewHolder, 
      *
      * @return
      */
-    public int onListFooterStyle() {
-        return R.drawable.loading_bar_style;
+    public int onListFooterStyle(FooterStyle footerStyle) {
+        if (footerStyle==FooterStyle.BLUE) {
+            return R.drawable.loading_bar_style_blue;
+        }else if (footerStyle==FooterStyle.RED){
+            return R.drawable.loading_bar_style_red;
+        }else if (footerStyle==FooterStyle.YELLOW){
+            return R.drawable.loading_bar_style_yellow;
+        }else{
+            return R.drawable.loading_bar_style_blue;
+        }
     }
 
     public void onListHeader(SwipeRefreshLayout mHeader) {

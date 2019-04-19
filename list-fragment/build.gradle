@@ -51,7 +51,7 @@ repositories {
 //发布jcenter
 
 ext {
-    bintrayRepo = 'listfragment' // the repository name in Bintray dashboard
+    bintrayRepo = 'android-libraries' // the repository name in Bintray dashboard
     bintrayName = 'listfragment' // the package name of the bintray repository
     libraryName = 'list-fragment'// the module name in android studio project
 
