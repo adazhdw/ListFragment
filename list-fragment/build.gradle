@@ -50,32 +50,33 @@ repositories {
 
 //发布jcenter
 
-ext {
-    bintrayRepo = 'android-libraries' // the repository name in Bintray dashboard
-    bintrayName = 'listfragment' // the package name of the bintray repository
-    libraryName = 'list-fragment'// the module name in android studio project
-
-    publishedGroupId = 'com.adazhdw.list' // the id you want to add in "implement" line
-    artifact = 'listfragment' // the id you want to add in "implement" line
-    libraryVersion = '0.2.0'
-
-    libraryDescription = 'Just started list library'
-    siteUrl = 'https://github.com/adazhdw/ListFragment'
-    gitUrl = 'https://github.com/adazhdw/ListFragment.git'
-    developerId = 'adazhdw1207'
-    developerName = 'Lucas Da'
-    developerEmail = 'adazhdw1207@gmail.com'
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
-}
-/**
- * These lines will download the gradle tasks for uploading on bintray from the specified URLs.
- * Add these lines to publish library to bintray, This is the readymade scripts made by github user nuunoeoi to
- * make uploading to bintray easy,place it at the end of the file
- */
-if (project.rootProject.file('local.properties').exists()) {
-    apply from: 'https://raw.githubusercontent.com/numetriclabz/jcenter/master/installv.gradle'
-    apply from: 'https://raw.githubusercontent.com/numetriclabz/jcenter/master/bintrayv.gradle'
+// 指定编码
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
 }
 
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.sourceFiles
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.sourceFiles
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+/*
+task classesJar(type: Jar) {
+    from "$buildDir/intermediates/classes/release"
+}
+*/
+
+artifacts {
+//    archives classesJar
+    archives javadocJar
+    archives sourcesJar
+}
