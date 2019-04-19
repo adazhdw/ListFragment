@@ -9,7 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.adazhdw.baselibrary.http.RetrofitUtil
 import com.adazhdw.baselibrary.http.requestC
+import com.adazhdw.list.BaseRvAdapter
+import com.adazhdw.list.BaseViewHolder
 import com.adazhdw.list.ListFragmentCustom
+import com.adazhdw.list.ListFragmentLine
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.list_fragment_load_more_item.view.*
 import retrofit2.http.GET
@@ -33,7 +36,6 @@ open class LoadMoreFragment :
     override fun noDataTip(): String {
         return "无数据"
     }
-
 
 
     override fun onAdapter(): LoadMoreAdapter {
@@ -80,6 +82,37 @@ open class LoadMoreFragment :
     }
 
     class LoadMoreHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+}
+
+open class ListFragment2 : ListFragmentLine<ChapterHistory, BaseViewHolder, ListFragment2.LoadMoreAdapter>() {
+    override fun onAdapter(): LoadMoreAdapter {
+        return LoadMoreAdapter()
+    }
+
+    override fun onNextPage(page: Int, callback: LoadCallback) {
+        RetrofitUtil.apiService(ApiService::class.java)
+            .getWxArticleHistory(408, page)
+            .requestC(onSuccess = {
+                callback.onResult()
+                if (listSize < 60) {
+                    callback.onSuccessLoad(it.data?.datas ?: mutableListOf())
+                } else {
+                    callback.onSuccessLoad(mutableListOf())
+                }
+            })
+    }
+
+    inner class LoadMoreAdapter : BaseRvAdapter<ChapterHistory>(context) {
+        override fun onLayoutId(): Int {
+            return R.layout.list_fragment_load_more_item
+        }
+
+        override fun initData(holder: BaseViewHolder, position: Int) {
+            getListItem(position).let {
+                holder.itemView.itemTv.text = it.title
+            }
+        }
+    }
 }
 
 interface ApiService {
