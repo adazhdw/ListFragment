@@ -4,17 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.adazhdw.baselibrary.http.RetrofitUtil
 import com.adazhdw.baselibrary.http.requestC
-import com.adazhdw.listfragment.ListFragmentCustom
+import com.adazh.list.ListFragmentCustom
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.list_fragment_load_more_item.view.*
-import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 
