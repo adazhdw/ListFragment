@@ -117,7 +117,6 @@ open class ListFragment2 : ListFragmentLine<ChapterHistory, BaseViewHolder, List
 
 interface ApiService {
 
-
     @GET("/wxarticle/list/{articleId}/{page}/json")
     fun getWxArticleHistory(@Path("articleId") articleId: Int, @Path("page") page: Int = 1): Observable<HistoryList>
 

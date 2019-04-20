@@ -54,8 +54,8 @@ dependencies {
 
     implementation 'com.github.adazhdw:GdBase:1.0.77'
 //    ListFragment库
-//        implementation 'com.github.adazhdw:ListFragment:0.2.2'
-    implementation project(':list-fragment')
+    implementation 'com.adazhdw.list:list-fragment:0.4.4'
+//    implementation project(':list-fragment')
 }
 repositories {
     mavenCentral()
