@@ -1,7 +1,5 @@
 # ListFragment
 
-[![](https://jitpack.io/v/adazhdw/ListFragment.svg)](https://jitpack.io/#adazhdw/ListFragment)
-
 ListFragment
 
 ### 引入application gradle 
