@@ -2,7 +2,7 @@
 
 ListFragment
 
-[ ![Download]](https://bintray.com/adazhdw1207/android-libraries/listfragment/_latestVersion)
+[ ![Download](https://bintray.com/adazhdw1207/android-libraries/listfragment/_latestVersion)]
 
 ### 引入application gradle 
 
