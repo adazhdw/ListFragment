@@ -217,11 +217,10 @@ public abstract class ListFragmentCustom<M, VH extends RecyclerView.ViewHolder, 
                 mLoading = false;
                 mSwipe.setEnabled(true);
                 mSwipe.setRefreshing(false);
-                mTranslationScrollView.resetAnim();
             }
 
             @Override
-            public void onLoad(List<M> list) {
+            public void onSuccessLoad(List<M> list) {
                 if (!list.isEmpty()) {
                     currPage++;
                     int start = mList.size();
@@ -230,6 +229,7 @@ public abstract class ListFragmentCustom<M, VH extends RecyclerView.ViewHolder, 
                 } else {
                     Toast.makeText(getContext(), noDataTip(), Toast.LENGTH_SHORT).show();
                 }
+                mTranslationScrollView.resetAnim();
             }
         });
     }
@@ -279,7 +279,7 @@ public abstract class ListFragmentCustom<M, VH extends RecyclerView.ViewHolder, 
          * Call this method means load data success
          * thi method must after {@link #onResult()}，and between two method mustn't have {@link ListFragmentCustom#nextPage()} call
          */
-        public abstract void onLoad(List<M> list);
+        public abstract void onSuccessLoad(List<M> list);
     }
 
 }

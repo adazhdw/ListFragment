@@ -23,7 +23,7 @@ import java.util.ArrayList
 abstract class ListFragmentLine<M, VH : RecyclerView.ViewHolder, A : BaseRvAdapter<M>> : BaseFragment(),
     SwipeRefreshLayout.OnRefreshListener {
     private val mListAdapter = onAdapter()
-    protected var mHandler = Handler(Looper.getMainLooper())
+    protected val mHandler = Handler(Looper.getMainLooper())
 
     protected val listSize: Int
         get() = mListAdapter.mData.size
@@ -81,7 +81,7 @@ abstract class ListFragmentLine<M, VH : RecyclerView.ViewHolder, A : BaseRvAdapt
 
     protected fun customizeView(context: Context?, rooContentFl: ViewGroup) {}
 
-    private fun onLayoutManager(): RecyclerView.LayoutManager {
+    protected open fun onLayoutManager(): LinearLayoutManager {
         return LinearLayoutManager(context, RecyclerView.VERTICAL, false)
     }
 

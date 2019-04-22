@@ -52,9 +52,8 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha04'
     implementation 'androidx.annotation:annotation:1.1.0-beta01'
 
-    implementation 'com.github.adazhdw:GdBase:1.0.77'
+    implementation 'com.adazhdw:baselibrary:1.0.2'
 //    ListFragment库
-//    implementation 'com.adazhdw.list:list-fragment:0.4.4'
     implementation project(':list-fragment')
 }
 repositories {

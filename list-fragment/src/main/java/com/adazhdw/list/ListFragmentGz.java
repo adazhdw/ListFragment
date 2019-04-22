@@ -197,7 +197,7 @@ public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A ex
             }
 
             @Override
-            public void onLoad(List<M> list) {
+            public void onSuccessLoad(List<M> list) {
                 if (!list.isEmpty()) {
                     currPage++;
                     int start = mList.size();
@@ -222,7 +222,7 @@ public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A ex
          * Call this method means load data success
          * thi method must after {@link #onResult()}，and between two method mustn't have {@link ListFragmentCustom#nextPage()} call
          */
-        public abstract void onLoad(List<M> list);
+        public abstract void onSuccessLoad(List<M> list);
     }
 
 }

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.adazhdw.baselibrary.http.RetrofitUtil
@@ -34,7 +35,6 @@ open class LoadMoreFragment :
         return "无数据"
     }
 
-
     override fun onAdapter(): LoadMoreAdapter {
         return LoadMoreAdapter()
     }
@@ -45,7 +45,7 @@ open class LoadMoreFragment :
             .requestC(onSuccess = {
                 mHandler.postDelayed({
                     callback.onResult()
-                    callback.onLoad(it.data?.datas ?: listOf())
+                    callback.onSuccessLoad(it.data?.datas ?: listOf())
                 }, 1000)
             })
     }
@@ -81,7 +81,7 @@ open class LoadMoreFragment :
     class LoadMoreHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 }
 
-open class ListFragment2 : ListFragmentGz<ChapterHistory, BaseViewHolder, ListFragment2.LoadMoreAdapter>() {
+open class ListFragment2 : ListFragmentLine<ChapterHistory, BaseViewHolder, ListFragment2.LoadMoreAdapter>() {
     override fun onAdapter(): LoadMoreAdapter {
         return LoadMoreAdapter()
     }
@@ -91,7 +91,7 @@ open class ListFragment2 : ListFragmentGz<ChapterHistory, BaseViewHolder, ListFr
             .getWxArticleHistory(408, page)
             .requestC(onSuccess = {
                 callback.onResult()
-                callback.onLoad(it.data?.datas ?: mutableListOf())
+                callback.onSuccessLoad(it.data?.datas ?: mutableListOf())
             })
     }
 
