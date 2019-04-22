@@ -15,6 +15,7 @@
         app:srlEnableFooterFollowWhenLoadFinished="true"
         app:srlEnableFooterFollowWhenNoMoreData="true"
         app:srlEnableFooterTranslationContent="true"
+        app:srlEnableScrollContentWhenLoaded="true"
         app:srlEnableRefresh="false">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

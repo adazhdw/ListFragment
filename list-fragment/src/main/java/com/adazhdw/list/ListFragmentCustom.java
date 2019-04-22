@@ -82,7 +82,7 @@ public abstract class ListFragmentCustom<M, VH extends RecyclerView.ViewHolder, 
             }
         });
 
-        setFooterStyle(onListFooterStyle(FooterStyle.RED));
+        setFooterStyle(onListFooterStyle(FooterStyle.BLUE));
         mSwipe.setOnRefreshListener(this);
         customizeView(getContext(), view.<ViewGroup>findViewById(R.id.rooContentFl));
         refresh();

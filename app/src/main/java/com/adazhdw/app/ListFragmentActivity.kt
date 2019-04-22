@@ -9,10 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.adazhdw.baselibrary.http.RetrofitUtil
 import com.adazhdw.baselibrary.http.requestC
-import com.adazhdw.list.BaseRvAdapter
-import com.adazhdw.list.BaseViewHolder
-import com.adazhdw.list.ListFragmentCustom
-import com.adazhdw.list.ListFragmentLine
+import com.adazhdw.list.*
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.list_fragment_load_more_item.view.*
 import retrofit2.http.GET
@@ -84,7 +81,7 @@ open class LoadMoreFragment :
     class LoadMoreHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 }
 
-open class ListFragment2 : ListFragmentLine<ChapterHistory, BaseViewHolder, ListFragment2.LoadMoreAdapter>() {
+open class ListFragment2 : ListFragmentGz<ChapterHistory, BaseViewHolder, ListFragment2.LoadMoreAdapter>() {
     override fun onAdapter(): LoadMoreAdapter {
         return LoadMoreAdapter()
     }
@@ -94,11 +91,7 @@ open class ListFragment2 : ListFragmentLine<ChapterHistory, BaseViewHolder, List
             .getWxArticleHistory(408, page)
             .requestC(onSuccess = {
                 callback.onResult()
-                if (listSize < 60) {
-                    callback.onSuccessLoad(it.data?.datas ?: mutableListOf())
-                } else {
-                    callback.onSuccessLoad(mutableListOf())
-                }
+                callback.onLoad(it.data?.datas ?: mutableListOf())
             })
     }
 

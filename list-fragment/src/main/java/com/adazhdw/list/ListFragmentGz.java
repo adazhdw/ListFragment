@@ -105,7 +105,7 @@ public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A ex
     }
 
     protected int pageStartAt() {
-        return 0;
+        return 1;
     }
 
     protected void customizeView(Context context, ViewGroup rooContentFl) {
@@ -193,7 +193,6 @@ public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A ex
                 mLoading = false;
                 mSwipe.setEnabled(true);
                 mSwipe.setRefreshing(false);
-                mSmartRefreshLayout.setEnableLoadMore(true);
                 mSmartRefreshLayout.finishLoadMore();
             }
 
@@ -205,6 +204,7 @@ public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A ex
                     mList.addAll(list);
 //                    mListAdapter.notifyDataSetChanged();
                     mListAdapter.notifyItemRangeInserted(start, mList.size());
+                    mSmartRefreshLayout.setEnableLoadMore(true);
                 } else {
                     Toast.makeText(getContext(), noDataTip(), Toast.LENGTH_SHORT).show();
                 }
