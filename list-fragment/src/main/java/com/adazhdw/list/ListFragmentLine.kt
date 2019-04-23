@@ -166,8 +166,7 @@ abstract class ListFragmentLine<M, VH : RecyclerView.ViewHolder, A : BaseRvAdapt
                 }
 
                 override fun onSuccessLoad(list: MutableList<M>) {
-                    if (!list.isEmpty()) {
-                        currPage++
+                    if (list.isNotEmpty()) {
                         mListAdapter.mData = list
                     } else {
                         mListAdapter.showLoading()

@@ -54,7 +54,8 @@ dependencies {
 
     implementation 'com.adazhdw:baselibrary:1.0.2'
 //    ListFragment库
-    implementation project(':list-fragment')
+    implementation 'com.adazhdw.list:list-fragment:0.4.5'
+//    implementation project(':list-fragment')
 }
 repositories {
     mavenCentral()

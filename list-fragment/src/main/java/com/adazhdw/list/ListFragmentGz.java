@@ -199,7 +199,6 @@ public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A ex
             @Override
             public void onSuccessLoad(List<M> list) {
                 if (!list.isEmpty()) {
-                    currPage++;
                     int start = mList.size();
                     mList.addAll(list);
 //                    mListAdapter.notifyDataSetChanged();

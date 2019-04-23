@@ -222,7 +222,6 @@ public abstract class ListFragmentCustom<M, VH extends RecyclerView.ViewHolder, 
             @Override
             public void onSuccessLoad(List<M> list) {
                 if (!list.isEmpty()) {
-                    currPage++;
                     int start = mList.size();
                     mList.addAll(list);
                     mListAdapter.notifyItemRangeInserted(start, mList.size());
