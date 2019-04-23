@@ -57,9 +57,9 @@ ext {
 
     publishedGroupId = 'com.adazhdw.list' // the id you want to add in "implement" line
     artifact = 'list-fragment' // = libraryName  the id you want to add in "implement" line--must be the module name in android project
-    libraryVersion = '0.4.5'
+    libraryVersion = '0.4.6'
 
-    libraryDescription = 'fix listFragment bugs'
+    libraryDescription = 'fix page bugs'
     siteUrl = 'https://github.com/adazhdw/ListFragment'
     gitUrl = 'https://github.com/adazhdw/ListFragment.git'
     developerId = 'adazhdw1207'
@@ -77,5 +77,7 @@ ext {
 if (project.rootProject.file('local.properties').exists()) {
     apply from: 'https://raw.githubusercontent.com/numetriclabz/jcenter/master/installv.gradle'
     apply from: 'https://raw.githubusercontent.com/numetriclabz/jcenter/master/bintrayv.gradle'
+//    apply from:"installv.gradle"
+//    apply from:"bintrayv.gradle"
 }
 
