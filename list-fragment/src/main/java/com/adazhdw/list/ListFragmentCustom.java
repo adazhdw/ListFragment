@@ -27,7 +27,11 @@ import com.adazhdw.list.widget.TranslationScrollView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
+/**
+ * ViewModel 模式并不适合目前的ListFragment的加载模式
+ *
+ * ViewModel mode isn't suitable for the current Loading data mode of the ListFragment
+ */
 public abstract class ListFragmentCustom<M, VH extends RecyclerView.ViewHolder, A extends RecyclerView.Adapter<VH>> extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
     private List<M> mList = new ArrayList<>();
     private boolean mLoading = false;
@@ -217,6 +221,7 @@ public abstract class ListFragmentCustom<M, VH extends RecyclerView.ViewHolder, 
                 mLoading = false;
                 mSwipe.setEnabled(true);
                 mSwipe.setRefreshing(false);
+                mTranslationScrollView.resetAnim();
             }
 
             @Override
@@ -228,7 +233,6 @@ public abstract class ListFragmentCustom<M, VH extends RecyclerView.ViewHolder, 
                 } else {
                     Toast.makeText(getContext(), noDataTip(), Toast.LENGTH_SHORT).show();
                 }
-                mTranslationScrollView.resetAnim();
             }
         });
     }

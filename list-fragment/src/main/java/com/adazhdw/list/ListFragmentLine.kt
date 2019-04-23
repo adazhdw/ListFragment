@@ -19,7 +19,11 @@ import com.adazhdw.list.utils.RecyclerUtil
 import kotlinx.android.synthetic.main.fragment_list_line.*
 
 import java.util.ArrayList
-
+/**
+ * ViewModel 模式并不适合目前的ListFragment的加载模式
+ *
+ * ViewModel mode isn't suitable for the current Loading data mode of the ListFragment
+ */
 abstract class ListFragmentLine<M, VH : RecyclerView.ViewHolder, A : BaseRvAdapter<M>> : BaseFragment(),
     SwipeRefreshLayout.OnRefreshListener {
     private val mListAdapter = onAdapter()
@@ -163,13 +167,13 @@ abstract class ListFragmentLine<M, VH : RecyclerView.ViewHolder, A : BaseRvAdapt
                     mListAdapter.isRefresh = false
                     swipe.isEnabled = true
                     swipe.isRefreshing = false
+                    mListAdapter.showLoading()
                 }
 
                 override fun onSuccessLoad(list: MutableList<M>) {
                     if (list.isNotEmpty()) {
                         mListAdapter.mData = list
                     } else {
-                        mListAdapter.showLoading()
                         Toast.makeText(context, noDataTip(), Toast.LENGTH_SHORT).show()
                     }
                 }
