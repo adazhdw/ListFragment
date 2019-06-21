@@ -4,7 +4,7 @@ ListFragment
 
 ### 引入application gradle 
 
-    implementation 'com.adazhdw.list:list-fragment:0.4.4'
+    implementation 'com.adazhdw.list:list-fragment:0.5.0'
     
 ### maven
 
