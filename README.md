@@ -11,6 +11,6 @@ ListFragment
     <dependency>
       <groupId>com.adazhdw.list</groupId>
       <artifactId>list-fragment</artifactId>
-      <version>0.4.4</version>
+      <version>0.5.0</version>
       <type>pom</type>
     </dependency>
