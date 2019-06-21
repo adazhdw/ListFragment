@@ -2,8 +2,14 @@ package com.adazhdw.list.base
 
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineScope
+import kotlin.coroutines.CoroutineContext
 
-open class BaseFragment : Fragment(), View.OnClickListener {
+open class BaseFragment : Fragment(), View.OnClickListener, CoroutineScope {
+    override val coroutineContext: CoroutineContext
+        get() = BaseViewModel().viewModelScope.coroutineContext
 
     val TAG = javaClass.simpleName
     val IDENTIFY = hashCode().toString()
