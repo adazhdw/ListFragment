@@ -7,10 +7,11 @@ dependencies {
 
 
     //ListFragment库
-    implementation 'com.adazhdw.list:list-fragment:0.4.7'
+    implementation project(path: ':list-fragment')
+//    implementation 'com.adazhdw.list:list-fragment:0.5.0'
 
     //BaseLibrary
-    implementation 'com.adazhdw:baselibrary:1.0.23'
+    implementation 'com.adazhdw:baselibrary:1.0.41'
 
     //Base
     implementation 'androidx.appcompat:appcompat:1.1.0-beta01'

@@ -9,10 +9,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.adazhdw.baselibrary.http.RetrofitUtil
+import com.adazhdw.baselibrary.http.await
 import com.adazhdw.baselibrary.http.requestC
+import com.adazhdw.baselibrary.http.retrofitService
 import com.adazhdw.list.*
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.list_fragment_load_more_item.view.*
+import kotlinx.coroutines.launch
+import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -24,75 +28,19 @@ class ListFragmentActivity : AppCompatActivity() {
     }
 }
 
-open class LoadMoreFragment :
-    ListFragmentCustom<ChapterHistory, LoadMoreFragment.LoadMoreHolder, LoadMoreFragment.LoadMoreAdapter>() {
-
-    override fun onListHeader(mHeader: SwipeRefreshLayout) {
-        mHeader.setColorSchemeResources(R.color.colorPrimary)
-    }
-
-    override fun noDataTip(): String {
-        return "无数据"
-    }
-
-    override fun onAdapter(): LoadMoreAdapter {
-        return LoadMoreAdapter()
-    }
-
-    override fun onNextPage(page: Int, callback: LoadCallback) {
-        RetrofitUtil.apiService(ApiService::class.java)
-            .getWxArticleHistory(408, page)
-            .requestC(onSuccess = {
-                mHandler.postDelayed({
-                    callback.onResult()
-                    callback.onSuccessLoad(it.data?.datas ?: listOf())
-                }, 1000)
-            })
-    }
-
-    inner class LoadMoreAdapter : RecyclerView.Adapter<LoadMoreHolder>() {
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LoadMoreHolder {
-            return LoadMoreHolder(
-                LayoutInflater.from(parent.context).inflate(
-                    R.layout.list_fragment_load_more_item,
-                    parent,
-                    false
-                )
-            ).apply {
-                itemView.setOnClickListener {
-                    showToast("第 $layoutPosition 行")
-                }
-            }
-        }
-
-        override fun getItemCount(): Int {
-            return listSize
-        }
-
-        override fun onBindViewHolder(holder: LoadMoreHolder, position: Int) {
-            getListItem(position).let {
-                holder.itemView.itemTv.text = it.title
-            }
-        }
-
-    }
-
-    class LoadMoreHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-}
-
 open class ListFragment2 : ListFragmentLine<ChapterHistory, BaseViewHolder, ListFragment2.LoadMoreAdapter>() {
     override fun onAdapter(): LoadMoreAdapter {
         return LoadMoreAdapter()
     }
 
     override fun onNextPage(page: Int, callback: LoadCallback) {
-        RetrofitUtil.apiService(ApiService::class.java)
-            .getWxArticleHistory(408, page)
-            .requestC(onSuccess = {
-                callback.onResult()
-                callback.onSuccessLoad(it.data?.datas ?: mutableListOf())
-            })
+        launch {
+            val data = retrofitService(ApiService::class.java)
+                .getWxArticleHistory2(408, page)
+                .await()
+            callback.onResult()
+            callback.onSuccessLoad(data.data?.datas ?: mutableListOf())
+        }
     }
 
     inner class LoadMoreAdapter : BaseRvAdapter<ChapterHistory>(context) {
@@ -112,5 +60,8 @@ interface ApiService {
 
     @GET("/wxarticle/list/{articleId}/{page}/json")
     fun getWxArticleHistory(@Path("articleId") articleId: Int, @Path("page") page: Int = 1): Observable<HistoryList>
+
+    @GET("/wxarticle/list/{articleId}/{page}/json")
+    fun getWxArticleHistory2(@Path("articleId") articleId: Int, @Path("page") page: Int = 1): Call<HistoryList>
 
 }

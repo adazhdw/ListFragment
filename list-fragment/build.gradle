@@ -57,7 +57,7 @@ repositories {
     mavenCentral()
 }
 
-//发布jcenter gradlew clean build install bintrayUpload
+//发布jcenter   gradlew clean build install bintrayUpload
 
 ext {
     bintrayRepo = 'android-libraries' // the repository name in Bintray dashboard
@@ -66,7 +66,7 @@ ext {
 
     publishedGroupId = 'com.adazhdw.list' // the id you want to add in "implement" line
     artifact = 'list-fragment' // = libraryName  the id you want to add in "implement" line--must be the module name in android project
-    libraryVersion = '0.5.0'
+    libraryVersion = '0.5.1'
 
     libraryDescription = 'add kotlin coroutines'
     siteUrl = 'https://github.com/adazhdw/ListFragment'

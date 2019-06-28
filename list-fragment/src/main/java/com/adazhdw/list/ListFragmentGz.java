@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import com.adazhdw.list.base.BaseFragment;
 import com.adazhdw.list.layout.InterceptLayoutEx;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -30,7 +31,7 @@ import java.util.List;
  *
  * ViewModel mode isn't suitable for the current Loading data mode of the ListFragment
  */
-public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A extends RecyclerView.Adapter<VH>> extends Fragment implements SwipeRefreshLayout.OnRefreshListener, IThemeColor {
+public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A extends RecyclerView.Adapter<VH>> extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, IThemeColor {
     protected String TAG = getClass().getSimpleName();
     private List<M> mList = new ArrayList<>();
     private boolean mLoading = false;
@@ -223,7 +224,7 @@ public abstract class ListFragmentGz<M, VH extends RecyclerView.ViewHolder, A ex
 
         /**
          * Call this method means load data success
-         * thi method must after {@link #onResult()}，and between two method mustn't have {@link ListFragmentCustom#nextPage()} call
+         * thi method must after {@link #onResult()}，and between two method mustn't have {@link ListFragmentGz#nextPage()} call
          */
         public abstract void onSuccessLoad(List<M> list);
     }

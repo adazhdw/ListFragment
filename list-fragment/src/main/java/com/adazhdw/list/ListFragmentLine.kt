@@ -15,10 +15,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.adazhdw.list.base.BaseFragment
 import com.adazhdw.list.base.FooterStyle
-import com.adazhdw.list.utils.RecyclerUtil
+import com.adazhdw.list.utils.isSlideToBottom
 import kotlinx.android.synthetic.main.fragment_list_line.*
 
-import java.util.ArrayList
 /**
  * ViewModel 模式并不适合目前的ListFragment的加载模式
  *
@@ -35,8 +34,8 @@ abstract class ListFragmentLine<M, VH : RecyclerView.ViewHolder, A : BaseRvAdapt
     protected val list: List<M>
         get() = mListAdapter.mData
 
-    protected var currPage = 0
-        private set
+    private var currPage = 0
+    private var pullNum = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_list_line, container, false)
@@ -54,7 +53,7 @@ abstract class ListFragmentLine<M, VH : RecyclerView.ViewHolder, A : BaseRvAdapt
         lineRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                if (RecyclerUtil.isSlideToBottom(recyclerView)) {
+                if (recyclerView.isSlideToBottom()) {
                     nextPage()
                 }
             }
