@@ -19,10 +19,6 @@ abstract class BaseRvAdapter<T>(private val mContext: Context?) : RecyclerView.A
     var isRefresh: Boolean = false
     var isLoading: Boolean = false
 
-    init {
-        this.mData = ArrayList()
-    }
-
     fun clearData() {
         mData.clear()
         notifyDataSetChanged()

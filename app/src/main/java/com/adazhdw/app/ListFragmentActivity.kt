@@ -39,7 +39,7 @@ open class ListFragment2 : ListFragmentLine<ChapterHistory, BaseViewHolder, List
                 .getWxArticleHistory2(408, page)
                 .await()
             callback.onResult()
-            callback.onSuccessLoad(data.data?.datas ?: mutableListOf())
+            callback.onSuccessLoad(data.data?.datas ?: listOf())
         }
     }
 

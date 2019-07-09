@@ -17,6 +17,7 @@ import com.adazhdw.list.base.BaseFragment
 import com.adazhdw.list.base.FooterStyle
 import com.adazhdw.list.utils.isSlideToBottom
 import kotlinx.android.synthetic.main.fragment_list_line.*
+import java.util.ArrayList
 
 /**
  * ViewModel 模式并不适合目前的ListFragment的加载模式
@@ -169,9 +170,9 @@ abstract class ListFragmentLine<M, VH : RecyclerView.ViewHolder, A : BaseRvAdapt
                     mListAdapter.showLoading()
                 }
 
-                override fun onSuccessLoad(list: MutableList<M>) {
+                override fun onSuccessLoad(list: List<M>) {
                     if (list.isNotEmpty()) {
-                        mListAdapter.mData = list
+                        mListAdapter.mData = list as MutableList<M>
                     } else {
                         Toast.makeText(context, noDataTip(), Toast.LENGTH_SHORT).show()
                     }
@@ -190,7 +191,7 @@ abstract class ListFragmentLine<M, VH : RecyclerView.ViewHolder, A : BaseRvAdapt
          * Call this method means load data success
          * thi method must after [.onResult]，and between two method mustn't have [ListFragmentLine.nextPage] call
          */
-        abstract fun onSuccessLoad(list: MutableList<M>)
+        abstract fun onSuccessLoad(list: List<M>)
     }
 
 }

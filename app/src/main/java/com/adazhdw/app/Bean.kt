@@ -8,7 +8,7 @@ open class NetBean<T> {
 }
 
 data class WxArticleChapter(
-    var children: ArrayList<String>? = null,
+    var children: List<String>? = null,
     var courseId: Int = 0,
     var id: Int = 0,
     var name: String? = null,
@@ -18,7 +18,7 @@ data class WxArticleChapter(
     var visible: Int = 0
 )
 
-class WxArticleList : NetBean<ArrayList<WxArticleChapter>>()
+class WxArticleList : NetBean<List<WxArticleChapter>>()
 
 data class ChapterHistory(
     val apkLink: String? = null,
@@ -51,7 +51,7 @@ data class HistoryTag(
 data class HistoryData(
     val curPage: Int,
     val offset: Int,
-    val datas: ArrayList<ChapterHistory>? = null,
+    val datas: List<ChapterHistory>? = null,
     val pageCount: Int,
     val size: Int,
     val total: Int,

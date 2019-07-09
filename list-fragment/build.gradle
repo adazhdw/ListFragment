@@ -66,9 +66,9 @@ ext {
 
     publishedGroupId = 'com.adazhdw.list' // the id you want to add in "implement" line
     artifact = 'list-fragment' // = libraryName  the id you want to add in "implement" line--must be the module name in android project
-    libraryVersion = '0.6.0'
+    libraryVersion = '0.6.1'
 
-    libraryDescription = 'update libraries'
+    libraryDescription = 'update ListFragmentLine'
     siteUrl = 'https://github.com/adazhdw/ListFragment'
     gitUrl = 'https://github.com/adazhdw/ListFragment.git'
     developerId = 'adazhdw1207'
