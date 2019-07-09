@@ -1,4 +1,4 @@
-package com.adazhdw.app
+package com.adazhdw.listapp
 
 import android.app.Application
 import com.adazhdw.baselibrary.initLibrary

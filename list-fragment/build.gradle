@@ -48,10 +48,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0-alpha01"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-alpha01"
 
-    //1.1.0 androidx 版本 下拉刷新，上拉加载第三方库
-    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-4'
-    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-4'
-
 }
 repositories {
     mavenCentral()

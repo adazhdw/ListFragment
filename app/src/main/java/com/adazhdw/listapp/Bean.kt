@@ -1,12 +1,23 @@
-package com.adazhdw.app
+package com.adazhdw.listapp
 
+import com.squareup.moshi.JsonClass
 
-open class NetBean<T> {
-    val errorCode: Int = 0
-    val errorMsg: String = ""
+@JsonClass(generateAdapter = true)
+data class BaseResponse<T>(
+    val errorCode: Int = 0,
+    val errorMsg: String = "",
     val data: T? = null
-}
+)
 
+@JsonClass(generateAdapter = true)
+data class ListResponse<T>(
+    val errorCode: Int = 0,
+    val errorMsg: String = "",
+    val data: List<T>?
+)
+
+
+@JsonClass(generateAdapter = true)
 data class WxArticleChapter(
     var children: List<String>? = null,
     var courseId: Int = 0,
@@ -18,8 +29,7 @@ data class WxArticleChapter(
     var visible: Int = 0
 )
 
-class WxArticleList : NetBean<List<WxArticleChapter>>()
-
+@JsonClass(generateAdapter = true)
 data class ChapterHistory(
     val apkLink: String? = null,
     val author: String? = null,
@@ -43,20 +53,22 @@ data class ChapterHistory(
     val tags: List<HistoryTag>? = null
 )
 
+@JsonClass(generateAdapter = true)
 data class HistoryTag(
     val name: String? = null,
     val url: String? = null
 )
 
+@JsonClass(generateAdapter = true)
 data class HistoryData(
-    val curPage: Int,
-    val offset: Int,
-    val datas: List<ChapterHistory>? = null,
-    val pageCount: Int,
-    val size: Int,
-    val total: Int,
-    val over: Boolean = false
-
+    val datas: List<ChapterHistory>? = null
 )
 
-class HistoryList : NetBean<HistoryData>()
+@JsonClass(generateAdapter = true)
+data class HotKey(
+    val id: Int,
+    val name: String?
+)
+
+
+

@@ -17,7 +17,6 @@ import com.adazhdw.list.base.BaseFragment
 import com.adazhdw.list.base.FooterStyle
 import com.adazhdw.list.utils.isSlideToBottom
 import kotlinx.android.synthetic.main.fragment_list_line.*
-import java.util.ArrayList
 
 /**
  * ViewModel 模式并不适合目前的ListFragment的加载模式
@@ -26,7 +25,7 @@ import java.util.ArrayList
  */
 abstract class ListFragmentLine<M, VH : RecyclerView.ViewHolder, A : BaseRvAdapter<M>> : BaseFragment(),
     SwipeRefreshLayout.OnRefreshListener {
-    private val mListAdapter = onAdapter()
+    private val mListAdapter by lazy { onAdapter() }
     protected val mHandler = Handler(Looper.getMainLooper())
 
     protected val listSize: Int
@@ -36,7 +35,7 @@ abstract class ListFragmentLine<M, VH : RecyclerView.ViewHolder, A : BaseRvAdapt
         get() = mListAdapter.mData
 
     private var currPage = 0
-    private var pullNum = 0
+    private var lastPullTime = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_list_line, container, false)
@@ -91,7 +90,7 @@ abstract class ListFragmentLine<M, VH : RecyclerView.ViewHolder, A : BaseRvAdapt
 
     protected fun addItemDecoration(decor: RecyclerView.ItemDecoration) {
         if (lineRecyclerView != null) {
-            lineRecyclerView!!.addItemDecoration(decor)
+            lineRecyclerView.addItemDecoration(decor)
         }
     }
 
@@ -165,8 +164,8 @@ abstract class ListFragmentLine<M, VH : RecyclerView.ViewHolder, A : BaseRvAdapt
                     }
                     mListAdapter.isLoading = false
                     mListAdapter.isRefresh = false
-                    swipe.isEnabled = true
-                    swipe.isRefreshing = false
+                    swipe?.isEnabled = true
+                    swipe?.isRefreshing = false
                     mListAdapter.showLoading()
                 }
 
@@ -178,7 +177,7 @@ abstract class ListFragmentLine<M, VH : RecyclerView.ViewHolder, A : BaseRvAdapt
                     }
                 }
             })
-        },1000)
+        }, 500)
     }
 
     abstract inner class LoadCallback {
