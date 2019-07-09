@@ -1,4 +1,4 @@
-package com.adazhdw.app;
+package com.adazhdw.listapp;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
